@@ -1,7 +1,7 @@
 # Личный проект «Кексобукинг»
 
-* Студент: [Kai Shoo](https://up.htmlacademy.ru/javascript/22/user/164863).
-* Наставник: `Неизвестно`.
+- Студент: [Kai Shoo](https://up.htmlacademy.ru/javascript/22/user/164863).
+- Наставник: [Дмитрий Гуляев](https://htmlacademy.ru/profile/dima).
 
 ---
 
