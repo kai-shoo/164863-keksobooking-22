@@ -2,10 +2,11 @@
 
 const randomizeInRange = function (min, max, precision = 0) {
 
-  if (min >= max || min < 0 || precision < 0) return null;
-
-  // Меняю макс для компенсации плохого округления у toFixed() и чтобы верхнее значение попадало в диапозон
-  max += 1 / Math.pow(10, (max.toString().length + precision));
+  if (
+    min >= max ||
+    min < 0 ||
+    precision < 0)
+    return null;
 
   return +(Math.random() * (max - min) + min).toFixed(precision);
 };
