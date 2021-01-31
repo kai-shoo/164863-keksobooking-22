@@ -1,15 +1,5 @@
 'use strict';
 
-
-
-const fixToFixed = function (number) {
-  const split = number.toString().split('.')
-  number = +(!split[1] ? split[0] : split.join('.') + '1')
-
-  return number;
-}
-
-
 const calcLengthOfFraction = function (number) {
   return (number.toString().includes('.')) ? (number.toString().split('.').pop().length) : (0);
 }
