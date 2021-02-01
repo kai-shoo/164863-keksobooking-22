@@ -14,8 +14,7 @@ const randomizeInRange = function (bottom, top, precision = 0) {
     precision < 0 ||
     Number.isInteger(precision) === false ||
     (top - bottom < 1 / 10 ** precision &&
-      top.toString().slice(0, -precision) ===
-        bottom.toString().slice(0, -precision))
+      top.toString().slice(0, -precision) === bottom.toString().slice(0, -precision))
   ) {
     return null
   }
@@ -25,8 +24,7 @@ const randomizeInRange = function (bottom, top, precision = 0) {
   let rangePrecisionMax = Math.max(
     bottomFractionLength,
     topFractionLength,
-    precision,
-  )
+    precision)
 
   if (rangePrecisionMax >= precision) {
     top = Math.floor(top * 10 ** precision)
@@ -39,9 +37,7 @@ const randomizeInRange = function (bottom, top, precision = 0) {
 
   let randomInRange = Math.floor(bottom + Math.random() * (top + 1 - bottom))
 
-  return +(randomInRange / 10 ** rangePrecisionMax / 10 ** precision).toFixed(
-    precision,
-  )
+  return +(randomInRange / 10 ** rangePrecisionMax / 10 ** precision).toFixed(precision)
 }
 
 randomizeInRange(0.2, 100.99999999, 20)
