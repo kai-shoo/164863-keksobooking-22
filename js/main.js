@@ -1,4 +1,4 @@
-'use strict'
+'use strict';
 
 const calcLengthOfFraction = function (number) {
   return number.toString().includes('.')
