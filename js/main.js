@@ -66,7 +66,7 @@ const createAdvert = function () {
     author: AUTHORS[randomizeInRange(0, AMOUNT_OF_AUTHORS - 1)],
 
     offer: {
-      title: TITLES.pop(randomizeInRange(0, TITLES.length - 1)),
+      title: TITLES.splice(randomizeInRange(0, TITLES.length - 1, 1)),
       address: `${randomizeInRange(0, 90, 6)} ${randomizeInRange(0, 180, 6)}`,
       price: randomizeInRange(1, 200000),
       type: `${TYPES[randomizeInRange(0, TYPES.length - 1)]}`,
@@ -75,7 +75,7 @@ const createAdvert = function () {
       checkin: `${TIME[randomizeInRange(0, TIME.length - 1)]}`,
       checkout: `${TIME[randomizeInRange(0, TIME.length - 1)]}`,
       features: FEATURES.slice(randomizeInRange(0, FEATURES.length - 1)),
-      description: DESCRIPTIONS.pop(randomizeInRange(0, DESCRIPTIONS.length - 1)),
+      description: DESCRIPTIONS.splice(randomizeInRange(0, DESCRIPTIONS.length - 1, 1)),
       photos: new Array(randomizeInRange(1, 40)).fill(null).map((_, index) => {
         return `http://o0.github.io/assets/images/tokyo/hotel${index + 1}.jpg`;
       }),
