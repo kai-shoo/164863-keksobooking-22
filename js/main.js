@@ -25,7 +25,7 @@ const randomizeInRange = function (bottom, top, precision = 0) {
   let rangePrecisionMax = Math.max(
     bottomFractionLength,
     topFractionLength,
-    precision
+    precision,
   );
 
   if (rangePrecisionMax >= precision) {
@@ -40,7 +40,7 @@ const randomizeInRange = function (bottom, top, precision = 0) {
   const randomInRange = Math.floor(bottom + Math.random() * (top + 1 - bottom));
 
   return +(randomInRange / 10 ** rangePrecisionMax / 10 ** precision).toFixed(
-    precision
+    precision,
   );
 };
 
@@ -85,7 +85,7 @@ const DESCRIPTIONS = [
   'Уютная однокомнатная квартира с отдельным входом на первом этаже. Полностью оборудована : Смарт ТВ, WiFi, посуда , бокалы, эл. плита, душ полотенца и постельное белье - хлопок.',
   'Уютная квартира в современном стиле, 33 кв. метра. Находится в самом центре города рядом с Невским проспектом. В квартире есть все необходимое для комфортного проживания. Закрытый, безопасный двор с видео наблюдением, бесплатная парковка.',
   'Историческое сердце Петербурга, район театров, музеев и творческих людей!✹ 5 минут до Летнего сада, Фонтанки, Чижика Пыжика и Михайловского замка.✹ 7 минут до набережной Невского проспекта и Невы.✹ Насладитесь разводом мостов в шаге от вашего дома.✹ 10 минут до Спаса на Крови и Русского музея.✹ 22 м²',
-  "Beautiful studio apartment in the center. Near Kazan and St. Isaac's Cathedral, Nevsky Prospect. All attractions within walking distance. 5 minutes away from underground. Restaurants and cozy cafes in the building. Clean and comfortable apartment with a fully equipped kitchen, washing machine, microwave, stove, shower. New double sofa.",
+  'Beautiful studio apartment in the center. Near Kazan and St. Isaacs Cathedral, Nevsky Prospect. All attractions within walking distance. 5 minutes away from underground. Restaurants and cozy cafes in the building. Clean and comfortable apartment with a fully equipped kitchen, washing machine, microwave, stove, shower. New double sofa.',
   'Duplex apartments in the "Consular House" are located on Kirochnaya street, 8. Metro "Chernyshevskaya" - 4 minutes on foot.The apartments are equipped with all necessary furniture and appliances for a comfortable stay, they have everything and more!',
   'Всего 3 минуты пешком до Казанского собора и до метро Невский проспект.Квартира находится на 1 этаже в тихом, зеленом дворе с видеонаблюдением.Окна выходят во двор, что позволит вам хорошо высыпаться после долгих прогулок по городу.Площадь 24 кв м.В квартире есть кухня с техникой, кофемашина, чайник, холодильник, электроплита, микроволновка, вытяжка, стиральная',
   'Студия 30 кв. метров, оформлена в романтическом стиле. Находится в самом центре города, рядом с Невским проспектом. Есть все необходимое для комфортного проживания. WiFi. Закрытый, безопасный двор с видео наблюдением, бесплатная парковка.',
@@ -109,7 +109,7 @@ const createAdvert = function () {
       features: FEATURES.slice(randomizeInRange(0, FEATURES.length - 1)),
       description: DESCRIPTIONS.splice(
         randomizeInRange(0, DESCRIPTIONS.length - 1),
-        1
+        1,
       )[0],
       photos: new Array(randomizeInRange(1, 3)).fill(null).map((_, index) => {
         return `http://o0.github.io/assets/images/tokyo/hotel${index + 1}.jpg`;

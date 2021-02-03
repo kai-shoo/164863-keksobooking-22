@@ -8,11 +8,16 @@ env:
   es2017: true
   browser: true
 
+rules:
+ prettier/prettier: error
+
+
 extends:
-  "htmlacademy/vanilla"
+  ["htmlacademy/vanilla"]
 
 plugins:
-  "prettier"
+  ["prettier"]
+
 
 
 

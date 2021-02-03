@@ -39,7 +39,7 @@ describe('randomizeInRange', function () {
     });
   });
 
-  describe('value check  --precision', function () { });
+  describe('value check  --precision', function () {});
 
   describe('null check', function () {
     it('1.1, 1.4, 0', function () {
