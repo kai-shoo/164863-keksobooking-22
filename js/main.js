@@ -76,7 +76,7 @@ const createAdvert = function () {
       checkout: `${TIME[randomizeInRange(0, TIME.length - 1)]}`,
       features: FEATURES.slice(randomizeInRange(0, FEATURES.length - 1)),
       description: DESCRIPTIONS.splice(randomizeInRange(0, DESCRIPTIONS.length - 1), 1)[0],
-      photos: new Array(randomizeInRange(1, 40)).fill(null).map((_, index) => {
+      photos: new Array(randomizeInRange(1, 3)).fill(null).map((_, index) => {
         return `http://o0.github.io/assets/images/tokyo/hotel${index + 1}.jpg`;
       }),
     },
