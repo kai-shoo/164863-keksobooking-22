@@ -10,3 +10,11 @@ env:
 
 extends:
   "htmlacademy/vanilla"
+
+plugins:
+  "prettier"
+
+
+
+
+
