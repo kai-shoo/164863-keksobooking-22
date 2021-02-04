@@ -2,7 +2,6 @@
 /* eslint-disable */
 
 describe('randomizeInRange', function () {
-
   function makeTest(min, max, precision) {
     assert.isAtLeast(randomizeInRange(min, max, precision), min);
     assert.isAtMost(randomizeInRange(min, max, precision), max);
@@ -24,8 +23,7 @@ describe('randomizeInRange', function () {
         makeTest(0, 100);
       }
     });
-
-  })
+  });
 
   describe('value check  --precision', function () {
     it('1.1, 1.5, 1', function () {
@@ -41,9 +39,7 @@ describe('randomizeInRange', function () {
     });
   });
 
-  describe('value check  --precision', function () {
-
-  });
+  describe('value check  --precision', function () {});
 
   describe('null check', function () {
     it('1.1, 1.4, 0', function () {
@@ -64,6 +60,4 @@ describe('randomizeInRange', function () {
       }
     });
   });
-
-
 });
