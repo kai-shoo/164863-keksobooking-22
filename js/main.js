@@ -67,6 +67,13 @@ const AUTHORS = new Array(AMOUNT_OF_AUTHORS).fill(null).map((_, index) => {
     avatar: `img/avatars/user0${index + 1}}}.png`,
   };
 });
+const COORDS_FRACTION_LENGTH = 5;
+const LATITUDE_RANGE = [35.65, 35.7];
+const LONGITUDE_RANGE = [139.7, 139.8];
+const ROOMS_RANGE = [1, 50];
+const GUESTS_RANGE = [1, 50];
+const PRICE_RANGE = [1, 200000];
+
 const TITLES = [
   'Студия с видом на Невский проспект',
   'Двухуровневая студия в центре в 5 мин. от метро #2',
@@ -94,16 +101,15 @@ const DESCRIPTIONS = [
 ];
 
 const createAdvert = function () {
-  return {
+  const advert = {
     author: AUTHORS[randomizeInRange(0, AMOUNT_OF_AUTHORS - 1)],
 
     offer: {
       title: TITLES.splice(randomizeInRange(0, TITLES.length - 1), 1)[0],
-      address: `${randomizeInRange(0, 90, 6)} ${randomizeInRange(0, 180, 6)}`,
-      price: randomizeInRange(1, 200000),
+      price: randomizeInRange(...PRICE_RANGE),
       type: `${TYPES[randomizeInRange(0, TYPES.length - 1)]}`,
-      rooms: randomizeInRange(1, 50),
-      guests: randomizeInRange(1, 50),
+      rooms: randomizeInRange(...ROOMS_RANGE),
+      guests: randomizeInRange(...GUESTS_RANGE),
       checkin: `${TIME[randomizeInRange(0, TIME.length - 1)]}`,
       checkout: `${TIME[randomizeInRange(0, TIME.length - 1)]}`,
       features: FEATURES.slice(randomizeInRange(0, FEATURES.length - 1)),
@@ -117,14 +123,18 @@ const createAdvert = function () {
     },
 
     location: {
-      x: randomizeInRange(35.65, 35.7, 5),
-      y: randomizeInRange(139.7, 139.8, 5),
+      x: randomizeInRange(...LATITUDE_RANGE, COORDS_FRACTION_LENGTH),
+      y: randomizeInRange(...LONGITUDE_RANGE, COORDS_FRACTION_LENGTH),
     },
   };
+
+  advert.offer.address = `${advert.location.x} ${advert.location.y}`;
+
+  return advert;
 };
 
-const testData = new Array(AMOUNT_OF_OBJECTS)
-  .fill(null)
-  .map(() => createAdvert());
+const testData = new Array(AMOUNT_OF_OBJECTS).fill(null).map(() => {
+  return createAdvert();
+});
 
 testData; // чтобы пройти eslint check
