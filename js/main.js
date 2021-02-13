@@ -1,4 +1,4 @@
-import { getMocks } from './getMocks.js';
+import { getMocks } from './get-mocks.js';
 
 const advert = getMocks();
 
