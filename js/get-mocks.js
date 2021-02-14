@@ -14,7 +14,7 @@ const FEATURES = [
 ];
 const AUTHORS = new Array(AMOUNT_OF_AUTHORS).fill(null).map((_, index) => {
   return {
-    avatar: `img/avatars/user0${index + 1}}}.png`,
+    avatar: `img/avatars/user0${index + 1}.png`,
   };
 });
 const COORDS_FRACTION_LENGTH = 5;
