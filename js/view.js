@@ -30,17 +30,19 @@ advertMocks.forEach((ad) => {
     '.popup__text--time',
   ).textContent = `Заезд после ${ad.offer.checkin}, выезд до ${ad.offer.checkout}`;
 
-  const featuresClasses = ad.offer.features
-    .slice()
-    .map((feature) => `popup__feature--${feature}`);
+  if (ad.offer.features.length !== 0) {
+    cardEl.querySelectorAll('.popup__feature').forEach((featureNode) => {
+      let isContains = false;
+      for (const item of ad.offer.features) {
+        if (featureNode.classList.contains(`popup__feature--${item}`))
+          isContains = true;
+      }
+      if (!isContains) featureNode.remove();
+    });
+  }
 
-  cardEl.querySelectorAll('.popup__feature').forEach((featureNode) => {
-    let isContains = false;
-    for (const item of featuresClasses) {
-      if (featureNode.classList.contains(item)) isContains = true;
-    }
-    if (!isContains) featureNode.remove();
-  });
+  if (ad.offer.features === 0)
+    cardEl.querySelector('.popup__features').remove();
 
   cardEl.querySelector('.popup__description').textContent =
     ad.offer.description;
