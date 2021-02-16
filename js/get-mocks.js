@@ -14,7 +14,7 @@ const FEATURES = [
 ];
 const AUTHORS = new Array(AMOUNT_OF_AUTHORS).fill(null).map((_, index) => {
   return {
-    avatar: `img/avatars/user0${index + 1}}}.png`,
+    avatar: `img/avatars/user0${index + 1}.png`,
   };
 });
 const COORDS_FRACTION_LENGTH = 5;
@@ -62,7 +62,7 @@ const createAdvert = function () {
       guests: randomizeInRange(...GUESTS_RANGE),
       checkin: `${TIME[randomizeInRange(0, TIME.length - 1)]}`,
       checkout: `${TIME[randomizeInRange(0, TIME.length - 1)]}`,
-      features: FEATURES.slice(randomizeInRange(0, FEATURES.length - 1)),
+      features: FEATURES.slice(randomizeInRange(0, FEATURES.length)),
       description: DESCRIPTIONS.splice(
         randomizeInRange(0, DESCRIPTIONS.length - 1),
         1,
