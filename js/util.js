@@ -42,4 +42,11 @@ const randomizeInRange = function (bottom, top, precision = 0) {
   );
 };
 
-export { randomizeInRange };
+const keepElementsByClassFromArr = function (array, elements) {
+  elements.forEach((element) => {
+    if (!array.some((className) => element.className.includes(`${className}`)))
+      element.remove();
+  });
+};
+
+export { randomizeInRange, keepElementsByClassFromArr };
