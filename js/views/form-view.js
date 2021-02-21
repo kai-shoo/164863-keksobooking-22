@@ -103,11 +103,14 @@ class FormView {
 
       if (this._roomInput.value !== '100') {
         option.disabled = this._roomInput.value < option.value ? true : false;
-        if (option.value === '0') option.disabled = true;
+        if (option.value === '0') {
+          option.disabled = true;
+        }
       }
 
-      if (this._capacityInput.value === option.value)
+      if (this._capacityInput.value === option.value) {
         this._capacityInput.dataset.isDisabled = option.disabled;
+      }
     });
   }
 
@@ -117,10 +120,11 @@ class FormView {
         'Комнат должно быть больше или столько же сколько гостей',
       );
 
-      if (this._roomInput.value === '100')
+      if (this._roomInput.value === '100') {
         this._capacityInput.setCustomValidity(
           '100 комнат может быть только "для не гостей"',
         );
+      }
 
       this._capacityInput.reportValidity();
     }
@@ -128,11 +132,6 @@ class FormView {
     if (this._capacityInput.dataset.isDisabled === 'false') {
       this._capacityInput.setCustomValidity('');
     }
-
-    // if (this._capacityInput.validity.badInput) {
-    //   this._capacityInput.setCustomValidity('Цена должна быть числом');
-    //   this._capacityInput.reportValidity();
-    // }
   }
 
   _addHandlerPriceValidity() {

@@ -46,7 +46,9 @@ class PopupView {
 
     const featuresNodes = popup.querySelectorAll('.popup__feature');
 
-    if (data.offer.features === 0) featuresNodes.remove();
+    if (data.offer.features === 0) {
+      featuresNodes.remove();
+    }
 
     if (data.offer.features.length !== 0) {
       const featuresClasses = data.offer.features.map(
