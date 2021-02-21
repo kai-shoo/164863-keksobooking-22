@@ -28,7 +28,7 @@ class FormView {
     };
 
     this.toggleFormsEnability();
-    this._inactivateInput(this._addressInput);
+    this._addressInput.disabled = true;
 
     this._addHandlerChangeType();
     this._addHandlerChangeTime();
@@ -41,13 +41,6 @@ class FormView {
 
   addHandlerToggle(handler) {
     window.addEventListener('DOMContentLoaded', handler);
-  }
-
-  _inactivateInput(input) {
-    ['keydown', 'mousedown'].forEach((event) =>
-      input.addEventListener(event, (e) => e.preventDefault()),
-    );
-    input.setAttribute('tabindex', -1);
   }
 
   _addHandlerTitleValidity() {
