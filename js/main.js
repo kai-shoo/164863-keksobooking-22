@@ -4,9 +4,7 @@ import formView from './views/form-view.js';
 import markerView from './views/marker-view.js';
 import popupView from './views/popup-view.js';
 
-const controlForm = function () {
-  formView.toggleFormsEnability();
-};
+const controlForm = function () {};
 
 const controlMap = function () {
   formView.toggleFormsEnability();
