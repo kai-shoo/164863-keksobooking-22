@@ -9,6 +9,7 @@ env:
   browser: true
 
 rules:
+ curly: 2
  prettier/prettier: error
 
 

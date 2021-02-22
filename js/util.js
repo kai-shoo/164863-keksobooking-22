@@ -44,8 +44,11 @@ const randomizeInRange = function (bottom, top, precision = 0) {
 
 const keepElementsByClassFromArr = function (array, elements) {
   elements.forEach((element) => {
-    if (!array.some((className) => element.className.includes(`${className}`)))
+    if (
+      !array.some((className) => element.className.includes(`${className}`))
+    ) {
       element.remove();
+    }
   });
 };
 
