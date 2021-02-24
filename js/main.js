@@ -33,7 +33,7 @@ const controlMarker = async function () {
       mapView.addToGroup(ad.marker);
     });
   } catch (err) {
-    throw err;
+    mapView.renderError();
   }
 };
 

@@ -5,6 +5,7 @@ const LAT = 35.6817;
 const LNG = 139.753882;
 const ZOOM = 10;
 const parentEl = document.querySelector('#map-canvas');
+const filter = document.querySelector('.map__filters-container');
 
 export const map = L.map(parentEl);
 export const markerGroup = L.featureGroup().addTo(map);
@@ -32,4 +33,13 @@ export const createMap = function (handler) {
 
 export const addToGroup = function (item) {
   item.addTo(markerGroup);
+};
+
+export const renderError = function () {
+  const markup = `
+    <div class="error__message-marker">
+      <p>Ошибка загрузки!</p>
+    </div>`;
+  filter.innerHTML = '';
+  filter.insertAdjacentHTML('afterbegin', markup);
 };
