@@ -1,199 +1,183 @@
-class FormView {
-  constructor() {
-    this._parentEl = document.querySelector('.ad-form');
-    this._fieldsets = document.querySelectorAll('.ad-form__element');
-    this._filterContainer = document.querySelector('.map__filters');
-    this._filters = document.querySelectorAll('.map__filter');
-    this._features = document.querySelector('.map__features');
-    this._buttonSubmit = document.querySelector('.ad-form__submit');
+const SPECIAL_ROOM_NUMBER = '100';
 
-    this._titleInput = document.querySelector('#title');
-    this._addressInput = document.querySelector('#address');
-    this._typeInput = document.querySelector('#type');
-    this._priceInput = document.querySelector('#price');
-    this._timeinInput = document.querySelector('#timein');
-    this._timeoutInput = document.querySelector('#timeout');
+const parentEl = document.querySelector('.ad-form');
+const fieldsets = document.querySelectorAll('.ad-form__element');
+const filterContainer = document.querySelector('.map__filters');
+const filters = document.querySelectorAll('.map__filter');
+const features = document.querySelector('.map__features');
 
-    this._capacityInput = document.querySelector('#capacity');
-    this._capacityOptions = this._capacityInput.querySelectorAll('option');
-    this._roomInput = document.querySelector('#room_number');
-    this._toggleForbiddenOptions();
-    // 1) Проверить какие селекты могут быть и убрать лишнии
+const titleInput = document.querySelector('#title');
+const addressInput = document.querySelector('#address');
+const typeInput = document.querySelector('#type');
+const priceInput = document.querySelector('#price');
+const timeinInput = document.querySelector('#timein');
+const timeoutInput = document.querySelector('#timeout');
 
-    this._typeToMinPrice = {
-      bungalow: 0,
-      flat: 1000,
-      house: 5000,
-      palace: 10000,
-    };
+const capacityInput = document.querySelector('#capacity');
+const capacityOptions = capacityInput.querySelectorAll('option');
+const roomInput = document.querySelector('#room_number');
 
-    this.toggleFormsEnability();
-    this._addressInput.disabled = true;
+const typeToMinPrice = {
+  bungalow: 0,
+  flat: 1000,
+  house: 5000,
+  palace: 10000,
+};
 
-    this._addHandlerChangeType();
-    this._addHandlerChangeTime();
-    this._addHandlerFormSubmit();
+export const addHandlerToggle = function (handler) {
+  window.addEventListener('DOMContentLoaded', handler);
+};
 
-    this._addHandlerTitleValidity();
-    this._addHandlerPriceValidity();
-    this._addHandlerGuestsValidity();
+const addHandlerTitleValidity = function () {
+  titleInput.addEventListener('focus', validateTitle);
+  titleInput.addEventListener('input', validateTitle);
+};
+
+const validateTitle = function () {
+  titleInput.setCustomValidity('');
+  if (titleInput.validity.valid) {
+    return;
   }
 
-  addHandlerToggle(handler) {
-    window.addEventListener('DOMContentLoaded', handler);
-  }
-
-  _addHandlerTitleValidity() {
-    ['input', 'focus'].forEach((event) => {
-      this._titleInput.addEventListener(event, () => {
-        this._titleInput.setCustomValidity('');
-        if (this._titleInput.validity.valid) {
-          return;
-        }
-
-        if (this._titleInput.validity.tooShort) {
-          this._titleInput.setCustomValidity(
-            'Заголовок должнен состоять минимум из 30-ти символов',
-          );
-          this._titleInput.reportValidity();
-        }
-        if (this._titleInput.validity.tooLong) {
-          this._titleInput.setCustomValidity(
-            'Заголовок не должен превышать 100 символов',
-          );
-          this._titleInput.reportValidity();
-        }
-        if (this._titleInput.validity.valueMissing) {
-          this._titleInput.setCustomValidity('Обязательное поле');
-          this._titleInput.reportValidity();
-        }
-      });
-    });
-  }
-
-  _addHandlerGuestsValidity() {
-    // 1) Определить какие значения допустимы
-    // 2) Поставить disable на вредные
-    // 3) Проверить валидити и выдать сообщение in case of what
-    this._roomInput.addEventListener('change', () => {
-      this._toggleForbiddenOptions();
-      this._validateGuests();
-    });
-
-    this._capacityInput.addEventListener('change', () => {
-      this._toggleForbiddenOptions();
-      this._validateGuests();
-    });
-  }
-
-  _toggleForbiddenOptions() {
-    this._capacityOptions.forEach((option) => {
-      if (this._roomInput.value === '100') {
-        option.disabled = option.value !== '0' ? true : false;
-
-        // capacity == option.value && option.disable =true datasetisdisabled
-      }
-
-      if (this._roomInput.value !== '100') {
-        option.disabled = this._roomInput.value < option.value ? true : false;
-        if (option.value === '0') {
-          option.disabled = true;
-        }
-      }
-
-      if (this._capacityInput.value === option.value) {
-        this._capacityInput.dataset.isDisabled = option.disabled;
-      }
-    });
-  }
-
-  _validateGuests() {
-    if (this._capacityInput.dataset.isDisabled === 'true') {
-      this._capacityInput.setCustomValidity(
-        'Комнат должно быть больше или столько же сколько гостей',
-      );
-
-      if (this._roomInput.value === '100') {
-        this._capacityInput.setCustomValidity(
-          '100 комнат может быть только "для не гостей"',
-        );
-      }
-
-      this._capacityInput.reportValidity();
-    }
-
-    if (this._capacityInput.dataset.isDisabled === 'false') {
-      this._capacityInput.setCustomValidity('');
-    }
-  }
-
-  _addHandlerPriceValidity() {
-    this._priceInput.addEventListener('input', this._validatePrice.bind(this));
-
-    this._priceInput.addEventListener('focus', this._validatePrice.bind(this));
-  }
-
-  _validatePrice() {
-    this._priceInput.setCustomValidity('');
-    if (this._priceInput.validity.valid) {
-      return;
-    }
-
-    if (this._priceInput.validity.rangeUnderflow) {
-      this._priceInput.setCustomValidity(
-        `Цена не должна быть меньше ${this._priceInput.getAttribute('min')}`,
-      );
-      this._priceInput.reportValidity();
-    }
-    if (this._priceInput.validity.rangeOverflow) {
-      this._priceInput.setCustomValidity('Цена не должна превышать 1000000');
-      this._priceInput.reportValidity();
-    }
-    if (this._priceInput.validity.valueMissing) {
-      this._priceInput.setCustomValidity('Обязательное поле');
-      this._priceInput.reportValidity();
-    }
-    if (this._priceInput.validity.badInput) {
-      this._priceInput.setCustomValidity('Цена должна быть числом');
-      this._priceInput.reportValidity();
-    }
-  }
-
-  _addHandlerChangeTime() {
-    [this._timeinInput, this._timeoutInput].forEach((input) =>
-      input.addEventListener('change', () => {
-        this._timeinInput.value = this._timeoutInput.value = input.value;
-      }),
+  if (titleInput.validity.tooShort) {
+    titleInput.setCustomValidity(
+      'Заголовок должнен состоять минимум из 30-ти символов',
     );
   }
-
-  _addHandlerChangeType() {
-    this._typeInput.addEventListener('change', () => {
-      const selected = this._typeInput.value;
-      const minPrice = this._typeToMinPrice[selected];
-      this._priceInput.setAttribute('min', minPrice);
-      this._priceInput.setAttribute('placeholder', minPrice);
-      this._validatePrice();
-    });
+  if (titleInput.validity.tooLong) {
+    titleInput.setCustomValidity(
+      `Заголовок не должен превышать ${SPECIAL_ROOM_NUMBER} символов`,
+    );
+  }
+  if (titleInput.validity.valueMissing) {
+    titleInput.setCustomValidity('Обязательное поле');
   }
 
-  toggleFormsEnability() {
-    this._parentEl.classList.toggle('ad-form--disabled');
-    this._fieldsets.forEach(
-      (fieldset) => (fieldset.disabled = !fieldset.disabled),
+  titleInput.reportValidity();
+};
+
+const addHandlerGuestsValidity = function () {
+  roomInput.addEventListener('change', () => {
+    toggleForbiddenOptions();
+    validateGuests();
+  });
+
+  capacityInput.addEventListener('change', () => {
+    toggleForbiddenOptions();
+    validateGuests();
+  });
+};
+
+const toggleForbiddenOptions = function () {
+  capacityOptions.forEach((option) => {
+    if (roomInput.value === SPECIAL_ROOM_NUMBER) {
+      option.disabled = option.value !== '0' ? true : false;
+
+      // capacity == option.value && option.disable =true datasetisdisabled
+    }
+
+    if (roomInput.value !== SPECIAL_ROOM_NUMBER) {
+      option.disabled = roomInput.value < option.value ? true : false;
+      if (option.value === '0') {
+        option.disabled = true;
+      }
+    }
+
+    if (capacityInput.value === option.value) {
+      capacityInput.dataset.isDisabled = option.disabled;
+    }
+  });
+};
+
+const validateGuests = function () {
+  if (capacityInput.dataset.isDisabled === 'true') {
+    capacityInput.setCustomValidity(
+      'Комнат должно быть больше или столько же сколько гостей',
     );
 
-    this._filterContainer.classList.toggle('map__filters--disabled');
-    this._features.disabled = !this._features.disabled;
-    this._filters.forEach((filter) => (filter.disabled = !filter.disabled));
+    if (roomInput.value === SPECIAL_ROOM_NUMBER) {
+      capacityInput.setCustomValidity(
+        `${SPECIAL_ROOM_NUMBER} комнат может быть только "для не гостей"`,
+      );
+    }
+
+    capacityInput.reportValidity();
   }
 
-  _addHandlerFormSubmit() {}
-
-  set addressValue(coords) {
-    const { lat, lng } = coords;
-    this._addressInput.value = `${lat.toFixed(5)}, ${lng.toFixed(5)}`;
+  if (capacityInput.dataset.isDisabled === 'false') {
+    capacityInput.setCustomValidity('');
   }
-}
+};
 
-export default new FormView();
+const addHandlerPriceValidity = function () {
+  priceInput.addEventListener('input', validatePrice);
+  priceInput.addEventListener('focus', validatePrice);
+};
+
+const validatePrice = function () {
+  priceInput.setCustomValidity('');
+  if (priceInput.validity.valid) {
+    return;
+  }
+
+  if (priceInput.validity.rangeUnderflow) {
+    priceInput.setCustomValidity(
+      `Цена не должна быть меньше ${priceInput.getAttribute('min')}`,
+    );
+  }
+  if (priceInput.validity.rangeOverflow) {
+    priceInput.setCustomValidity('Цена не должна превышать 1000000');
+  }
+  if (priceInput.validity.valueMissing) {
+    priceInput.setCustomValidity('Обязательное поле');
+  }
+  if (priceInput.validity.badInput) {
+    priceInput.setCustomValidity('Цена должна быть числом');
+  }
+
+  priceInput.reportValidity();
+};
+
+const addHandlerChangeTime = function () {
+  [timeinInput, timeoutInput].forEach((input) =>
+    input.addEventListener('change', () => {
+      timeinInput.value = timeoutInput.value = input.value;
+    }),
+  );
+};
+
+const addHandlerChangeType = function () {
+  typeInput.addEventListener('change', () => {
+    const selected = typeInput.value;
+    const minPrice = typeToMinPrice[selected];
+    priceInput.setAttribute('min', minPrice);
+    priceInput.setAttribute('placeholder', minPrice);
+    validatePrice();
+  });
+};
+
+export const toggleFormsEnability = function () {
+  parentEl.classList.toggle('ad-form--disabled');
+  fieldsets.forEach((fieldset) => (fieldset.disabled = !fieldset.disabled));
+
+  filterContainer.classList.toggle('map__filters--disabled');
+  features.disabled = !features.disabled;
+  filters.forEach((filter) => (filter.disabled = !filter.disabled));
+};
+
+export const addressValue = function (coords) {
+  const { lat, lng } = coords;
+  addressInput.value = `${lat.toFixed(5)}, ${lng.toFixed(5)}`;
+};
+
+toggleFormsEnability();
+addressInput.disabled = true;
+
+toggleForbiddenOptions();
+
+addHandlerChangeType();
+addHandlerChangeTime();
+
+addHandlerTitleValidity();
+addHandlerPriceValidity();
+addHandlerGuestsValidity();

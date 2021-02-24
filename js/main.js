@@ -1,41 +1,36 @@
 import * as model from './model.js';
-import mapView from './views/map-view.js';
-import formView from './views/form-view.js';
-import markerView from './views/marker-view.js';
-import popupView from './views/popup-view.js';
+import * as mapView from './views/map-view.js';
+import * as formView from './views/form-view.js';
+import * as markerView from './views/marker-view.js';
+import * as popupView from './views/popup-view.js';
 
 const controlForm = function () {};
 
 const controlMap = function () {
+  mapView.createMap();
   formView.toggleFormsEnability();
 };
 
 const controlMainPin = function () {
-  const coords = markerView.mainMarker.getLatLng();
-  formView.addressValue = coords;
+  const coords = this.getLatLng();
+  formView.addressValue(coords);
 };
 
 const controlPopup = function (event) {
   const clickedMarker = event.propagatedFrom;
-
-  const clickedAd = model.state.find((ad) => ad.marker === clickedMarker);
-
+  const clickedAd = model.state.ads.find((ad) => ad.marker === clickedMarker);
   popupView.renderPopup(clickedMarker, clickedAd);
 };
 
 const controlMarker = function () {
-  model.state.forEach((ad) => {
+  model.state.ads.forEach((ad) => {
     const { x, y } = ad.location;
-    markerView.renderMarker(x, y);
-    ad.marker = markerView.marker;
+    ad.marker = markerView.createMarker(x, y);
+    mapView.addToGroup(ad.marker);
   });
 };
 
 const init = function () {
-  [popupView, markerView, mapView].forEach(
-    (objView) => (objView.map = model.map),
-  );
-
   formView.addHandlerToggle(controlForm);
   mapView.addHandlerLoad(controlMap);
   markerView.addHandlerRenderMarkers(controlMarker);

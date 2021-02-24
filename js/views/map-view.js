@@ -1,34 +1,35 @@
 /* eslint-disable no-undef */
+/* global L:readonly */
+
 const LAT = 35.6817;
 const LNG = 139.753882;
 const ZOOM = 13;
+const parentEl = document.querySelector('#map-canvas');
 
-class MapView {
-  constructor() {
-    this._lat = LAT;
-    this._lng = LNG;
-  }
+export const map = L.map(parentEl);
+export const markerGroup = L.featureGroup().addTo(map);
 
-  addHandlerLoad(handler) {
-    window.addEventListener('DOMContentLoaded', () => this._createMap(handler));
-  }
+export const addHandlerLoad = function (handler) {
+  window.addEventListener('DOMContentLoaded', () => createMap(handler));
+};
 
-  _createMap(handler) {
-    L.tileLayer('https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png', {
-      attribution:
-        '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-    }).addTo(this.map);
+export const createMap = function (handler) {
+  L.tileLayer('https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png', {
+    attribution:
+      '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+  }).addTo(map);
 
-    this.map.on('load', handler);
+  map.on('load', handler);
 
-    this.map.setView(
-      {
-        lat: this._lat,
-        lng: this._lng,
-      },
-      ZOOM,
-    );
-  }
-}
+  map.setView(
+    {
+      lat: LAT,
+      lng: LNG,
+    },
+    ZOOM,
+  );
+};
 
-export default new MapView();
+export const addToGroup = function (item) {
+  item.addTo(markerGroup);
+};

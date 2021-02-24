@@ -1,4 +1,6 @@
 /* eslint-disable no-undef */
+import { map, markerGroup } from './map-view.js';
+
 const ICON_MAIN_PIN = {
   iconUrl: './img/main-pin.svg',
   iconSize: [25, 41],
@@ -11,55 +13,44 @@ const ICON_PIN = {
   popupAnchor: [0, -31],
 };
 
-class MarkerView {
-  addHandlerAttachInput(handler) {
-    this.map.on('load', () => this.renderMainPin(handler));
-  }
+export const addHandlerAttachInput = function (handler) {
+  map.on('load', () => renderMainPin(handler));
+};
 
-  addHandlerRenderMarkers(handler) {
-    this.createGroup();
-    this.map.on('load', handler);
-  }
+export const addHandlerRenderMarkers = function (handler) {
+  map.on('load', handler);
+};
 
-  addHandlerShowPopup(handler) {
-    this._markersGroup.on('click', handler);
-  }
+export const addHandlerShowPopup = function (handler) {
+  markerGroup.on('click', handler);
+};
 
-  createGroup() {
-    this._markersGroup = L.featureGroup().addTo(this.map);
-  }
+export const bindPopup = function (popup) {
+  marker.bindPopup(popup);
+};
 
-  bindPopup(popup) {
-    this.marker.bindPopup(popup);
-  }
+export const togglePopup = function (marker) {
+  marker.getPopup().togglePopup();
+};
 
-  togglePopup(marker) {
-    marker.getPopup().togglePopup();
-  }
+export const renderMainPin = function (handler) {
+  const mapCenter = map.getCenter();
 
-  renderMainPin(handler) {
-    const mapCenter = this.map.getCenter();
+  const mainMarker = L.marker(mapCenter, {
+    draggable: true,
+    icon: L.icon(ICON_MAIN_PIN),
+  });
+  mainMarker.addTo(map);
+  mainMarker.on('move', handler);
+};
 
-    this.mainMarker = L.marker(mapCenter, {
-      draggable: true,
-      icon: L.icon(ICON_MAIN_PIN),
-    });
-    this.mainMarker.addTo(this.map);
-    this.mainMarker.on('move', handler);
-  }
+export const createMarker = function (lat, lng) {
+  const marker = L.marker(
+    { lat: lat, lng: lng },
+    {
+      icon: L.icon(ICON_PIN),
+    },
+  );
 
-  renderMarker(lat, lng) {
-    const marker = L.marker(
-      { lat: lat, lng: lng },
-      {
-        icon: L.icon(ICON_PIN),
-      },
-    ).addTo(this._markersGroup);
-
-    this.map.addLayer(marker);
-
-    this.marker = marker;
-  }
-}
-
-export default new MarkerView();
+  return marker;
+};
