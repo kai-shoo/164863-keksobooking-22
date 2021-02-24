@@ -1,3 +1,16 @@
-import { getMocks } from './get-mocks.js';
+/*eslint-disable  no-useless-catch*/
 
-export const state = { ads: getMocks() };
+import { AJAX } from './util.js';
+
+const URL = 'https://22.javascript.pages.academy/keksobooking/data';
+
+export const state = {};
+
+export const loadAds = async function () {
+  try {
+    const data = await AJAX(URL);
+    state.ads = data;
+  } catch (err) {
+    throw err;
+  }
+};

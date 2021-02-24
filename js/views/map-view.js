@@ -3,7 +3,7 @@
 
 const LAT = 35.6817;
 const LNG = 139.753882;
-const ZOOM = 13;
+const ZOOM = 10;
 const parentEl = document.querySelector('#map-canvas');
 
 export const map = L.map(parentEl);

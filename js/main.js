@@ -1,3 +1,5 @@
+/*eslint-disable  no-useless-catch*/
+
 import * as model from './model.js';
 import * as mapView from './views/map-view.js';
 import * as formView from './views/form-view.js';
@@ -22,12 +24,17 @@ const controlPopup = function (event) {
   popupView.renderPopup(clickedMarker, clickedAd);
 };
 
-const controlMarker = function () {
-  model.state.ads.forEach((ad) => {
-    const { x, y } = ad.location;
-    ad.marker = markerView.createMarker(x, y);
-    mapView.addToGroup(ad.marker);
-  });
+const controlMarker = async function () {
+  try {
+    await model.loadAds();
+    model.state.ads.forEach((ad) => {
+      const { lat, lng } = ad.location;
+      ad.marker = markerView.createMarker(lat, lng);
+      mapView.addToGroup(ad.marker);
+    });
+  } catch (err) {
+    throw err;
+  }
 };
 
 const init = function () {
