@@ -1,4 +1,3 @@
-/* eslint-disable no-undef */
 /* global L:readonly */
 
 export const LAT = 35.6817;

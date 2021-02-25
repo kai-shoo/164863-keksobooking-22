@@ -1,5 +1,3 @@
-/*eslint-disable  no-useless-catch*/
-
 import * as model from './model.js';
 import * as mapView from './views/map-view.js';
 import * as formView from './views/form-view.js';
