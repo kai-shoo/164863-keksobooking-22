@@ -65,7 +65,5 @@ const generateMarkup = function (data) {
 
   fragment.append(popup);
 
-  document.querySelector('footer').append(fragment.cloneNode(true));
-
   return fragment;
 };

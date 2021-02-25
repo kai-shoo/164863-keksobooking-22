@@ -17,6 +17,8 @@ const capacityInput = document.querySelector('#capacity');
 const capacityOptions = capacityInput.querySelectorAll('option');
 const roomInput = document.querySelector('#room_number');
 
+const buttonReset = document.querySelector('.ad-form__reset');
+
 const typeToMinPrice = {
   bungalow: 0,
   flat: 1000,
@@ -114,6 +116,12 @@ const addHandlerPriceValidity = function () {
   priceInput.addEventListener('focus', validatePrice);
 };
 
+const addHandlerButtonReset = function () {
+  buttonReset.addEventListener('click', () => {
+    refreshForm();
+  });
+};
+
 const validatePrice = function () {
   priceInput.setCustomValidity('');
   if (priceInput.validity.valid) {
@@ -170,8 +178,16 @@ export const addressValue = function (coords) {
   addressInput.value = `${lat.toFixed(5)}, ${lng.toFixed(5)}`;
 };
 
+export const addHandlerSubmit = function (handler) {
+  parentEl.addEventListener('submit', handler);
+};
+
+export const refreshForm = function () {
+  parentEl.reset();
+};
+
 toggleFormsEnability();
-addressInput.disabled = true;
+addressInput.setAttribute('readonly', 'readonly');
 
 toggleForbiddenOptions();
 
@@ -181,3 +197,4 @@ addHandlerChangeTime();
 addHandlerTitleValidity();
 addHandlerPriceValidity();
 addHandlerGuestsValidity();
+addHandlerButtonReset();

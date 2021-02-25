@@ -26,10 +26,7 @@ const AJAX = async function (url, uploadData = undefined) {
   const fetchPro = uploadData
     ? fetch(url, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(uploadData),
+        body: uploadData,
       })
     : fetch(url);
 

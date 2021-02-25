@@ -1,27 +1,35 @@
 /* eslint-disable no-undef */
 /* global L:readonly */
 
-const LAT = 35.6817;
-const LNG = 139.753882;
+export const LAT = 35.6817;
+export const LNG = 139.753882;
 const ZOOM = 10;
 const parentEl = document.querySelector('#map-canvas');
 const filter = document.querySelector('.map__filters-container');
 
-export const map = L.map(parentEl);
-export const markerGroup = L.featureGroup().addTo(map);
-
 export const addHandlerLoad = function (handler) {
-  window.addEventListener('DOMContentLoaded', () => createMap(handler));
+  window.addEventListener('DOMContentLoaded', handler);
 };
 
-export const createMap = function (handler) {
+export const addHandlerAttachInput = function (handler) {
+  markerMain.on('move add', handler);
+};
+
+export const addHandlerRenderMarker = function (handler) {
+  map.on('load', handler);
+};
+
+const createMap = function () {
+  const map = L.map(parentEl);
   L.tileLayer('https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png', {
     attribution:
       '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
   }).addTo(map);
 
-  map.on('load', handler);
+  return map;
+};
 
+export const setView = function () {
   map.setView(
     {
       lat: LAT,
@@ -35,7 +43,7 @@ export const addToGroup = function (item) {
   item.addTo(markerGroup);
 };
 
-export const renderError = function () {
+export const renderErrorLoadAds = function () {
   const markup = `
     <div class="error__message-marker">
       <p>Ошибка загрузки!</p>
@@ -43,3 +51,7 @@ export const renderError = function () {
   filter.innerHTML = '';
   filter.insertAdjacentHTML('afterbegin', markup);
 };
+
+export const map = createMap();
+export const markerMain = L.marker({ lat: LAT, lng: LNG }, { draggable: true });
+export const markerGroup = L.featureGroup().addTo(map);

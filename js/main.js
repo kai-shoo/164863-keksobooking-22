@@ -5,16 +5,19 @@ import * as mapView from './views/map-view.js';
 import * as formView from './views/form-view.js';
 import * as markerView from './views/marker-view.js';
 import * as popupView from './views/popup-view.js';
+import * as pageView from './views/page-view.js';
 
 const controlForm = function () {};
 
 const controlMap = function () {
-  mapView.createMap();
+  mapView.setView();
+  markerView.renderMarkerMain(mapView.markerMain);
+
   formView.toggleFormsEnability();
 };
 
-const controlMainPin = function () {
-  const coords = this.getLatLng();
+const controlMarkerMain = function () {
+  const coords = mapView.markerMain.getLatLng();
   formView.addressValue(coords);
 };
 
@@ -33,16 +36,32 @@ const controlMarker = async function () {
       mapView.addToGroup(ad.marker);
     });
   } catch (err) {
-    mapView.renderError();
+    mapView.renderErrorLoadAds();
+  }
+};
+
+const controlSubmit = async function (evt) {
+  try {
+    evt.preventDefault();
+    const data = new FormData(evt.target);
+    await model.sendAds(data);
+
+    const coords = { lat: mapView.LAT, lng: mapView.LNG };
+    formView.addressValue(coords);
+    pageView.renderSuccess();
+    formView.refreshForm();
+  } catch (err) {
+    pageView.renderError(err.message);
   }
 };
 
 const init = function () {
   formView.addHandlerToggle(controlForm);
   mapView.addHandlerLoad(controlMap);
-  markerView.addHandlerRenderMarkers(controlMarker);
   markerView.addHandlerShowPopup(controlPopup);
-  markerView.addHandlerAttachInput(controlMainPin);
+  mapView.addHandlerAttachInput(controlMarkerMain);
+  mapView.addHandlerRenderMarker(controlMarker);
+  formView.addHandlerSubmit(controlSubmit);
 };
 
 init();

@@ -13,14 +13,6 @@ const ICON_PIN = {
   popupAnchor: [0, -31],
 };
 
-export const addHandlerAttachInput = function (handler) {
-  map.on('load', () => renderMainPin(handler));
-};
-
-export const addHandlerRenderMarkers = function (handler) {
-  map.on('load', handler);
-};
-
 export const addHandlerShowPopup = function (handler) {
   markerGroup.on('click', handler);
 };
@@ -33,15 +25,8 @@ export const togglePopup = function (marker) {
   marker.getPopup().togglePopup();
 };
 
-export const renderMainPin = function (handler) {
-  const mapCenter = map.getCenter();
-
-  const mainMarker = L.marker(mapCenter, {
-    draggable: true,
-    icon: L.icon(ICON_MAIN_PIN),
-  });
-  mainMarker.addTo(map);
-  mainMarker.on('move', handler);
+export const renderMarkerMain = function (marker) {
+  marker.setIcon(L.icon(ICON_MAIN_PIN)).addTo(map);
 };
 
 export const createMarker = function (lat, lng) {
