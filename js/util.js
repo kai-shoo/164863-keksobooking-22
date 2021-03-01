@@ -1,6 +1,6 @@
 /*eslint-disable  indent*/
 
-const TIMEOUT_SEC = 10;
+const TIMEOUT = 10000;
 
 const keepElementsByClassFromArr = function (array, elements) {
   elements.forEach((element) => {
@@ -20,7 +20,7 @@ const timeout = function (s) {
           `Запрос выполняется слишком долго! Прервано после ${s} секунд`,
         ),
       );
-    }, s * 1000);
+    }, s);
   });
 };
 
@@ -32,7 +32,7 @@ const AJAX = async function (url, uploadData = undefined) {
       })
     : fetch(url);
 
-  const res = await Promise.race([fetchPro, timeout(TIMEOUT_SEC)]);
+  const res = await Promise.race([fetchPro, timeout(TIMEOUT)]);
 
   const data = await res.json();
 

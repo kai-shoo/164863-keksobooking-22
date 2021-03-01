@@ -14,9 +14,9 @@ const controlMap = function () {
   formView.toggleFormsEnability();
 };
 
-const controlMarkerMain = function () {
+const controlMarkerMainMove = function () {
   const coords = mapView.markerMain.getLatLng();
-  formView.addressValue(coords);
+  formView.setAddressValue(coords);
 };
 
 const controlPopup = function (event) {
@@ -45,7 +45,7 @@ const controlSubmit = async function (evt) {
     await model.sendAds(data);
 
     const coords = { lat: mapView.LAT, lng: mapView.LNG };
-    formView.addressValue(coords);
+    formView.setAddressValue(coords);
     pageView.renderSuccess();
     formView.refreshForm();
   } catch (err) {
@@ -57,7 +57,7 @@ const init = function () {
   formView.addHandlerToggle(controlForm);
   mapView.addHandlerLoad(controlMap);
   markerView.addHandlerShowPopup(controlPopup);
-  mapView.addHandlerAttachInput(controlMarkerMain);
+  mapView.addHandlerAttachInput(controlMarkerMainMove);
   mapView.addHandlerRenderMarker(controlMarker);
   formView.addHandlerSubmit(controlSubmit);
 };

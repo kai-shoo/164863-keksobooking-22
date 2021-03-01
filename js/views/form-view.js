@@ -173,7 +173,7 @@ export const toggleFormsEnability = function () {
   filters.forEach((filter) => (filter.disabled = !filter.disabled));
 };
 
-export const addressValue = function (coords) {
+export const setAddressValue = function (coords) {
   const { lat, lng } = coords;
   addressInput.value = `${lat.toFixed(5)}, ${lng.toFixed(5)}`;
 };
