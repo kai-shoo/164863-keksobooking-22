@@ -62,12 +62,12 @@ const controlSubmit = async function (evt) {
 
 const controlFilterChange = function () {
   const filterMask = filterView.getFilterMask();
-  const filterdAds = model.filterAds(filterMask);
+  const filteredAds = model.filterAds(filterMask).slice(0, ADS_MAX);
 
   mapView.markerGroup.clearLayers();
   mapView.map.closePopup();
   mapView.centerMap();
-  markerView.renderMarkers(filterdAds);
+  markerView.renderMarkers(filteredAds);
 };
 
 const init = function () {
