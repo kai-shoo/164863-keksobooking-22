@@ -1,5 +1,7 @@
 /* eslint-disable no-undef */
-import { map, markerGroup } from './map-view.js';
+import { map, markerGroup, addToGroup } from './map-view.js';
+
+export const markers = [];
 
 const ICON_MAIN_PIN = {
   iconUrl: './img/main-pin.svg',
@@ -29,6 +31,14 @@ export const renderMarkerMain = function (marker) {
   marker.setIcon(L.icon(ICON_MAIN_PIN)).addTo(map);
 };
 
+export const renderMarkers = function (data) {
+  data.forEach((ad) => {
+    const { lat, lng } = ad.location;
+    const marker = createMarker(lat, lng);
+    addToGroup(marker);
+  });
+};
+
 export const createMarker = function (lat, lng) {
   const marker = L.marker(
     { lat: lat, lng: lng },
@@ -36,6 +46,8 @@ export const createMarker = function (lat, lng) {
       icon: L.icon(ICON_PIN),
     },
   );
+
+  markers.push(marker);
 
   return marker;
 };
