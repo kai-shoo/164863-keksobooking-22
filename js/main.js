@@ -60,7 +60,6 @@ const controlSubmit = async function (evt) {
     mapView.centerMap();
     mapView.markerMain.setLatLng(coords);
   } catch (err) {
-    console.log(err.message, err);
     pageView.renderError();
   }
 };
