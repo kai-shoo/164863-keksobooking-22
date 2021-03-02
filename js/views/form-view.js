@@ -116,10 +116,8 @@ const addHandlerPriceValidity = function () {
   priceInput.addEventListener('focus', validatePrice);
 };
 
-const addHandlerButtonReset = function () {
-  buttonReset.addEventListener('click', () => {
-    refreshForm();
-  });
+export const addHandlerButtonReset = function (handler) {
+  buttonReset.addEventListener('click', handler);
 };
 
 const validatePrice = function () {
@@ -182,7 +180,7 @@ export const addHandlerSubmit = function (handler) {
   parentEl.addEventListener('submit', handler);
 };
 
-export const refreshForm = function () {
+export const refresh = function () {
   parentEl.reset();
 };
 

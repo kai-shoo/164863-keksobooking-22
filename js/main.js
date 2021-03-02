@@ -52,11 +52,14 @@ const controlSubmit = async function (evt) {
     await model.sendAds(data);
 
     const coords = { lat: mapView.LAT, lng: mapView.LNG };
-    formView.setAddressValue(coords);
     pageView.renderSuccess();
-    formView.refreshForm();
+    formView.refresh();
+    filterView.refresh();
+    mapView.centerMap();
+    mapView.markerMain.setLatLng(coords);
   } catch (err) {
-    pageView.renderError(err.message);
+    console.log(err.message, err);
+    pageView.renderError();
   }
 };
 
@@ -70,6 +73,13 @@ const controlFilterChange = function () {
   markerView.renderMarkers(filteredAds);
 };
 
+const controlButtonReset = function () {
+  mapView.centerMap();
+  formView.refresh();
+  filterView.refresh();
+  mapView.markerMain.setLatLng({ lat: mapView.LAT, lng: mapView.LNG });
+};
+
 const init = function () {
   formView.addHandlerToggle(controlForm);
   mapView.addHandlerLoad(controlMap);
@@ -77,6 +87,7 @@ const init = function () {
   mapView.addHandlerAttachInput(controlMarkerMainMove);
   mapView.addHandlerRenderMarker(controlMarker);
   formView.addHandlerSubmit(controlSubmit);
+  formView.addHandlerButtonReset(controlButtonReset);
   filterView.addHandlerChange(controlFilterChange);
 };
 

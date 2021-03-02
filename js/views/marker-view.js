@@ -47,7 +47,5 @@ export const createMarker = function (lat, lng) {
     },
   );
 
-  markers.push(marker);
-
   return marker;
 };

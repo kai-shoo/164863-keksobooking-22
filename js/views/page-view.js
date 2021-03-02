@@ -4,13 +4,19 @@ const renderMessage = function (name) {
     .content.querySelector(`.${name}`);
 
   const fragment = document.createDocumentFragment();
-  fragment.appendChild(template);
+  fragment.appendChild(template.cloneNode(true));
   document.querySelector('main').appendChild(fragment);
 
   const message = document.querySelector(`.${name}`);
+  message.focus();
 
   message.addEventListener('click', () => {
     document.querySelector(`.${name}`).remove();
+  });
+  message.addEventListener('keydown', function removeModal(evt) {
+    if (evt.key === 'Escape') {
+      document.querySelector(`.${name}`).remove();
+    }
   });
 };
 

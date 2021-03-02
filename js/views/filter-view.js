@@ -30,6 +30,10 @@ export const getFilterMask = function () {
   };
 };
 
+export const refresh = function () {
+  filtersForm.reset();
+};
+
 // {
 //   "author": {
 //     "avatar": "img/avatars/user03.png"
