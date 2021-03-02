@@ -5,7 +5,9 @@ import * as markerView from './views/marker-view.js';
 import * as popupView from './views/popup-view.js';
 import * as pageView from './views/page-view.js';
 import * as filterView from './views/filter-view.js';
+import debounce from '../node_modules/lodash-es/debounce.js';
 
+const RERENDER_DELAY = 500;
 const ADS_MAX = 10;
 
 const controlForm = function () {};
@@ -88,7 +90,7 @@ const init = function () {
   mapView.addHandlerRenderMarker(controlMarker);
   formView.addHandlerSubmit(controlSubmit);
   formView.addHandlerButtonReset(controlButtonReset);
-  filterView.addHandlerChange(controlFilterChange);
+  filterView.addHandlerChange(debounce(controlFilterChange, RERENDER_DELAY));
 };
 
 init();
