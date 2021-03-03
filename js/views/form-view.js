@@ -1,4 +1,12 @@
 const SPECIAL_ROOM_NUMBER = '100';
+const FILE_TYPES = ['gif', 'jpg', 'jpeg', 'png'];
+
+const typeToMinPrice = {
+  bungalow: 0,
+  flat: 1000,
+  house: 5000,
+  palace: 10000,
+};
 
 const parentEl = document.querySelector('.ad-form');
 const fieldsets = document.querySelectorAll('.ad-form__element');
@@ -13,18 +21,16 @@ const priceInput = document.querySelector('#price');
 const timeinInput = document.querySelector('#timein');
 const timeoutInput = document.querySelector('#timeout');
 
+const avatarInput = document.querySelector('#avatar');
+const avatarPreview = document.querySelector('.ad-form-header__preview > img');
+const imagesInput = document.querySelector('#images');
+const imagesPreview = document.querySelector('.ad-form__photo > img');
+
 const capacityInput = document.querySelector('#capacity');
 const capacityOptions = capacityInput.querySelectorAll('option');
 const roomInput = document.querySelector('#room_number');
 
 const buttonReset = document.querySelector('.ad-form__reset');
-
-const typeToMinPrice = {
-  bungalow: 0,
-  flat: 1000,
-  house: 5000,
-  palace: 10000,
-};
 
 export const addHandlerToggle = function (handler) {
   window.addEventListener('DOMContentLoaded', handler);
@@ -33,6 +39,43 @@ export const addHandlerToggle = function (handler) {
 const addHandlerTitleValidity = function () {
   titleInput.addEventListener('focus', validateTitle);
   titleInput.addEventListener('input', validateTitle);
+};
+
+const addHandlerAvatarUpload = function () {
+  avatarInput.addEventListener(
+    'change',
+    renderImagePreview.bind(avatarInput, avatarPreview),
+  );
+};
+
+const addHandlerImagesUpload = function () {
+  imagesInput.addEventListener(
+    'change',
+    renderImagePreview.bind(imagesInput, imagesPreview),
+  );
+};
+
+const renderImagePreview = function (preview) {
+  const file = this.files[0];
+  console.log(file);
+  const fileName = file.name.toLowerCase();
+
+  const isMatch = FILE_TYPES.some((it) => {
+    return fileName.endsWith(it);
+  });
+
+  if (isMatch) {
+    const reader = new FileReader();
+
+    reader.addEventListener('load', () => {
+      console.log(preview);
+      preview.setAttribute('width', '40');
+      preview.setAttribute('height', '44');
+      preview.src = reader.result;
+    });
+
+    reader.readAsDataURL(file);
+  }
 };
 
 const validateTitle = function () {
@@ -74,8 +117,6 @@ const toggleForbiddenOptions = function () {
   capacityOptions.forEach((option) => {
     if (roomInput.value === SPECIAL_ROOM_NUMBER) {
       option.disabled = option.value !== '0' ? true : false;
-
-      // capacity == option.value && option.disable =true datasetisdisabled
     }
 
     if (roomInput.value !== SPECIAL_ROOM_NUMBER) {
@@ -196,3 +237,5 @@ addHandlerTitleValidity();
 addHandlerPriceValidity();
 addHandlerGuestsValidity();
 addHandlerButtonReset();
+addHandlerAvatarUpload();
+addHandlerImagesUpload();
