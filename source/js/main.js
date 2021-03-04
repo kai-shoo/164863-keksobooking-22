@@ -5,14 +5,12 @@ import * as markerView from './views/marker-view.js';
 import * as popupView from './views/popup-view.js';
 import * as pageView from './views/page-view.js';
 import * as filterView from './views/filter-view.js';
-import debounce from '../../node_modules/lodash-es/debounce.js';
+import debounce from 'lodash-es';
 
 const RERENDER_DELAY = 500;
 const ADS_MAX = 10;
 
-const controlForm = function () {};
-
-const controlMap = function () {
+const controlMapLoad = function () {
   mapView.center();
   markerView.renderMarkerMain(mapView.markerMain);
 
@@ -24,7 +22,7 @@ const controlMarkerMainMove = function () {
   formView.setAddressValue(coords);
 };
 
-const controlPopup = function (event) {
+const controlPopupShow = function (event) {
   const clickedMarker = event.propagatedFrom;
   const clickedAd = model.state.ads.find((ad) => {
     if (
@@ -37,7 +35,7 @@ const controlPopup = function (event) {
   popupView.renderPopup(clickedMarker, clickedAd);
 };
 
-const controlMarker = async function () {
+const controlMarkerRender = async function () {
   try {
     await model.loadAds();
     const currentAds = model.state.ads.slice(0, ADS_MAX);
@@ -47,7 +45,7 @@ const controlMarker = async function () {
   }
 };
 
-const controlSubmit = async function (evt) {
+const controlFormSumbit = async function (evt) {
   try {
     evt.preventDefault();
     const data = new FormData(evt.target);
@@ -86,12 +84,11 @@ const controlButtonReset = function (evt) {
 };
 
 const init = function () {
-  formView.addHandlerToggle(controlForm);
-  mapView.addHandlerLoad(controlMap);
-  markerView.addHandlerShowPopup(controlPopup);
+  mapView.addHandlerLoad(controlMapLoad);
+  markerView.addHandlerPopupShow(controlPopupShow);
   mapView.addHandlerAttachInput(controlMarkerMainMove);
-  mapView.addHandlerRenderMarker(controlMarker);
-  formView.addHandlerSubmit(controlSubmit);
+  mapView.addHandlerRenderMarker(controlMarkerRender);
+  formView.addHandlerSubmit(controlFormSumbit);
   formView.addHandlerButtonReset(controlButtonReset);
   filterView.addHandlerChange(debounce(controlFilterChange, RERENDER_DELAY));
 };

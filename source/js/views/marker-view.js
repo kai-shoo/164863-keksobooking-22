@@ -13,7 +13,7 @@ const ICON_PIN = {
   popupAnchor: [0, -31],
 };
 
-export const addHandlerShowPopup = function (handler) {
+export const addHandlerPopupShow = function (handler) {
   markerGroup.on('click', handler);
 };
 

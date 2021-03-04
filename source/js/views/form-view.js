@@ -32,10 +32,6 @@ const roomInput = document.querySelector('#room_number');
 
 const buttonReset = document.querySelector('.ad-form__reset');
 
-export const addHandlerToggle = function (handler) {
-  window.addEventListener('DOMContentLoaded', handler);
-};
-
 const addHandlerTitleValidity = function () {
   titleInput.addEventListener('focus', validateTitle);
   titleInput.addEventListener('input', validateTitle);
