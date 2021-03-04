@@ -1,8 +1,6 @@
 /* eslint-disable no-undef */
 import { map, markerGroup, addToGroup } from './map-view.js';
 
-export const markers = [];
-
 const ICON_MAIN_PIN = {
   iconUrl: './img/main-pin.svg',
   iconSize: [25, 41],

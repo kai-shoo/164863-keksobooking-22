@@ -74,7 +74,9 @@ const controlFilterChange = function () {
   markerView.renderMarkers(filteredAds);
 };
 
-const controlButtonReset = function () {
+const controlButtonReset = function (evt) {
+  evt.preventDefault();
+
   formView.refresh();
   filterView.refresh();
   mapView.center();
