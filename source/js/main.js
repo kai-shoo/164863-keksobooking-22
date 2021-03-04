@@ -13,7 +13,7 @@ const ADS_MAX = 10;
 const controlForm = function () {};
 
 const controlMap = function () {
-  mapView.centerMap();
+  mapView.center();
   markerView.renderMarkerMain(mapView.markerMain);
 
   formView.toggleFormsEnability();
@@ -57,7 +57,7 @@ const controlSubmit = async function (evt) {
     pageView.renderSuccess();
     formView.refresh();
     filterView.refresh();
-    mapView.centerMap();
+    mapView.center();
     mapView.markerMain.setLatLng(coords);
   } catch (err) {
     pageView.renderError();
@@ -70,15 +70,17 @@ const controlFilterChange = function () {
 
   mapView.markerGroup.clearLayers();
   mapView.map.closePopup();
-  mapView.centerMap();
+  mapView.center();
   markerView.renderMarkers(filteredAds);
 };
 
 const controlButtonReset = function () {
   formView.refresh();
   filterView.refresh();
-  mapView.centerMap();
-  mapView.markerMain.setLatLng({ lat: mapView.LAT, lng: mapView.LNG });
+  mapView.center();
+
+  const coords = { lat: mapView.LAT, lng: mapView.LNG };
+  mapView.markerMain.setLatLng(coords);
 };
 
 const init = function () {
