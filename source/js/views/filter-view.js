@@ -14,6 +14,7 @@ const PRICE_TO_RANGE = {
 
 export const addHandlerChange = function (handler) {
   filtersForm.addEventListener('input', handler);
+  filtersForm.addEventListener('reset', handler);
 };
 
 export const getFilterMask = function () {
@@ -33,26 +34,3 @@ export const getFilterMask = function () {
 export const refresh = function () {
   filtersForm.reset();
 };
-
-// {
-//   "author": {
-//     "avatar": "img/avatars/user03.png"
-//   },
-//   "offer": {
-//     "title": "Небольшая лавочка в парке",
-//     "address": "Chiyoda-ku, Tōkyō-to 102-0091",
-//     "price": 100,
-//     "type": "bungalow",
-//     "rooms": 0,
-//     "guests": 0,
-//     "checkin": "0:00",
-//     "checkout": "0:00",
-//     "features": [],
-//     "description": "Великолепная лавочка прямо в центре парка. Подходит для всех кто любит спать на свежем воздухе.",
-//     "photos": []
-//   },
-//   "location": {
-//     "lat": 35.71628235346422,
-//     "lng": 139.51163649559024
-//   }
-// }

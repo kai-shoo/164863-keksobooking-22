@@ -1,4 +1,5 @@
-/* global L:readonly */
+import L from 'leaflet';
+import 'leaflet/dist/leaflet.css';
 
 export const LAT = 35.6817;
 export const LNG = 139.753882;

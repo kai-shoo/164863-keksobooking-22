@@ -57,7 +57,6 @@ const addHandlerImagesUpload = function () {
 
 const renderImagePreview = function (preview) {
   const file = this.files[0];
-  console.log(file);
   const fileName = file.name.toLowerCase();
 
   const isMatch = FILE_TYPES.some((it) => {
@@ -68,7 +67,6 @@ const renderImagePreview = function (preview) {
     const reader = new FileReader();
 
     reader.addEventListener('load', () => {
-      console.log(preview);
       preview.setAttribute('width', '40');
       preview.setAttribute('height', '44');
       preview.src = reader.result;

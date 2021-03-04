@@ -5,7 +5,7 @@ import * as markerView from './views/marker-view.js';
 import * as popupView from './views/popup-view.js';
 import * as pageView from './views/page-view.js';
 import * as filterView from './views/filter-view.js';
-import debounce from '../node_modules/lodash-es/debounce.js';
+import debounce from '../../node_modules/lodash-es/debounce.js';
 
 const RERENDER_DELAY = 500;
 const ADS_MAX = 10;
@@ -75,9 +75,9 @@ const controlFilterChange = function () {
 };
 
 const controlButtonReset = function () {
-  mapView.centerMap();
   formView.refresh();
   filterView.refresh();
+  mapView.centerMap();
   mapView.markerMain.setLatLng({ lat: mapView.LAT, lng: mapView.LNG });
 };
 
