@@ -22,9 +22,9 @@ const timeinInput = document.querySelector('#timein');
 const timeoutInput = document.querySelector('#timeout');
 
 const avatarInput = document.querySelector('#avatar');
-const avatarPreview = document.querySelector('.ad-form-header__preview > img');
+const avatarPreview = document.querySelector('.ad-form-header__preview');
 const imagesInput = document.querySelector('#images');
-const imagesPreview = document.querySelector('.ad-form__photo > img');
+const imagesPreview = document.querySelector('.ad-form__photo');
 
 const capacityInput = document.querySelector('#capacity');
 const capacityOptions = capacityInput.querySelectorAll('option');
@@ -67,9 +67,11 @@ const renderImagePreview = function (preview) {
     const reader = new FileReader();
 
     reader.addEventListener('load', () => {
-      preview.setAttribute('width', '40');
-      preview.setAttribute('height', '44');
-      preview.src = reader.result;
+      const image = new Image(40, 40);
+      image.src = reader.result;
+
+      preview.innerHTML = '';
+      preview.append(image);
     });
 
     reader.readAsDataURL(file);
