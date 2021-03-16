@@ -5,7 +5,7 @@ import * as markerView from './views/marker-view.js';
 import * as popupView from './views/popup-view.js';
 import * as pageView from './views/page-view.js';
 import * as filterView from './views/filter-view.js';
-import debounce from 'lodash-es';
+import debounce from 'lodash-es/debounce.js';
 
 const RERENDER_DELAY = 500;
 const ADS_MAX = 10;
