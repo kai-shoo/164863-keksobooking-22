@@ -17,14 +17,6 @@ export const addHandlerPopupShow = function (handler) {
   markerGroup.on('click', handler);
 };
 
-export const bindPopup = function (popup) {
-  marker.bindPopup(popup);
-};
-
-export const togglePopup = function (marker) {
-  marker.getPopup().togglePopup();
-};
-
 export const renderMarkerMain = function (marker) {
   marker.setIcon(L.icon(ICON_MAIN_PIN)).addTo(map);
 };

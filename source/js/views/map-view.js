@@ -29,7 +29,7 @@ const createMap = function () {
   return map;
 };
 
-export const center = function () {
+export const setCenter = function () {
   map.setView(
     {
       lat: LAT,

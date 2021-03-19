@@ -11,7 +11,7 @@ const RERENDER_DELAY = 500;
 const ADS_MAX = 10;
 
 const controlMapLoad = function () {
-  mapView.center();
+  mapView.setCenter();
   markerView.renderMarkerMain(mapView.markerMain);
 
   formView.toggleFormsEnability();
@@ -55,7 +55,7 @@ const controlFormSumbit = async function (evt) {
     pageView.renderSuccess();
     formView.refresh();
     filterView.refresh();
-    mapView.center();
+    mapView.setCenter();
     mapView.markerMain.setLatLng(coords);
   } catch (err) {
     pageView.renderError();
@@ -68,7 +68,7 @@ const controlFilterChange = function () {
 
   mapView.markerGroup.clearLayers();
   mapView.map.closePopup();
-  mapView.center();
+  mapView.setCenter();
   markerView.renderMarkers(filteredAds);
 };
 
@@ -77,7 +77,7 @@ const controlButtonReset = function (evt) {
 
   formView.refresh();
   filterView.refresh();
-  mapView.center();
+  mapView.setCenter();
 
   const coords = { lat: mapView.LAT, lng: mapView.LNG };
   mapView.markerMain.setLatLng(coords);

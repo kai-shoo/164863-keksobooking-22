@@ -5,7 +5,7 @@ const guests = document.querySelector('#housing-guests');
 const price = document.querySelector('#housing-price');
 const featuresFieldset = document.querySelector('#housing-features');
 
-const PRICE_TO_RANGE = {
+const priceTypeToRange = {
   any: [0],
   low: [0, 10000],
   middle: [10000, 50000],
@@ -23,7 +23,7 @@ export const getFilterMask = function () {
   ).map((feature) => feature.value);
 
   return {
-    price: PRICE_TO_RANGE[price.value],
+    price: priceTypeToRange[price.value],
     type: type.value,
     rooms: rooms.value,
     guests: guests.value,

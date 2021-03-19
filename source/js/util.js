@@ -12,7 +12,7 @@ const keepElementsByClassFromArr = function (array, elements) {
   });
 };
 
-const timeout = function (s) {
+const breakAfterTime = function (s) {
   return new Promise(function (_, reject) {
     setTimeout(function () {
       reject(
@@ -24,7 +24,7 @@ const timeout = function (s) {
   });
 };
 
-const AJAX = async function (url, uploadData = undefined) {
+const exchangeData = async function (url, uploadData = undefined) {
   const fetchPro = uploadData
     ? fetch(url, {
         method: 'POST',
@@ -32,7 +32,7 @@ const AJAX = async function (url, uploadData = undefined) {
       })
     : fetch(url);
 
-  const res = await Promise.race([fetchPro, timeout(TIMEOUT)]);
+  const res = await Promise.race([fetchPro, breakAfterTime(TIMEOUT)]);
 
   const data = await res.json();
 
@@ -42,4 +42,4 @@ const AJAX = async function (url, uploadData = undefined) {
   return data;
 };
 
-export { keepElementsByClassFromArr, AJAX };
+export { keepElementsByClassFromArr, exchangeData as AJAX };
