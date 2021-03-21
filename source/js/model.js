@@ -1,30 +1,22 @@
 /*eslint-disable  no-useless-catch*/
 
-import { AJAX } from './util.js';
+import { AJAX as exchangeData } from './util.js';
 
 const URL = 'https://22.javascript.pages.academy/keksobooking';
 
 export const state = {};
 
 export const loadAds = async function () {
-  try {
-    const data = await AJAX(`${URL}/data`);
-    state.ads = data;
-  } catch (err) {
-    throw err;
-  }
+  const data = await exchangeData(`${URL}/data`);
+  state.ads = data;
 };
 
 export const sendAds = function (data) {
-  try {
-    return AJAX(URL, data);
-  } catch (err) {
-    throw err;
-  }
+  return exchangeData(URL, data);
 };
 
 export const filterAds = function (mask) {
-  const filteredData = state.ads.filter((ad) => {
+  const filteredData = state.ads.filter(function (ad) {
     if (ad.offer.type && ad.offer.type !== mask.type && mask.type !== 'any') {
       return false;
     }
@@ -53,7 +45,7 @@ export const filterAds = function (mask) {
     }
 
     if (ad.offer.features.length !== 0 && mask.features.length !== 0) {
-      const isContainsAllFeature = mask.features.every((feature) => {
+      const isContainsAllFeature = mask.features.every(function (feature) {
         return ad.offer.features.includes(feature);
       });
 

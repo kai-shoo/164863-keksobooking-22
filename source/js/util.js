@@ -1,11 +1,11 @@
-/*eslint-disable  indent*/
-
 const TIMEOUT = 10000;
 
 const keepElementsByClassFromArr = function (array, elements) {
-  elements.forEach((element) => {
+  elements.forEach(function (element) {
     if (
-      !array.some((className) => element.className.includes(`${className}`))
+      !array.some(function (className) {
+        return element.className.includes(`${className}`);
+      })
     ) {
       element.remove();
     }
@@ -26,10 +26,7 @@ const breakAfterTime = function (s) {
 
 const exchangeData = async function (url, uploadData = undefined) {
   const fetchPro = uploadData
-    ? fetch(url, {
-        method: 'POST',
-        body: uploadData,
-      })
+    ? fetch(url, { method: 'POST', body: uploadData })
     : fetch(url);
 
   const res = await Promise.race([fetchPro, breakAfterTime(TIMEOUT)]);

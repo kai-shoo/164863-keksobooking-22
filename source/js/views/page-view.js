@@ -10,7 +10,7 @@ const renderMessage = function (name) {
   const message = document.querySelector(`.${name}`);
   message.focus();
 
-  message.addEventListener('click', () => {
+  message.addEventListener('click', function () {
     document.querySelector(`.${name}`).remove();
   });
   message.addEventListener('keydown', function removeModal(evt) {

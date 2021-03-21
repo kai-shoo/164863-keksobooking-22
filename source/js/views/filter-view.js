@@ -20,7 +20,9 @@ export const addHandlerChange = function (handler) {
 export const getFilterMask = function () {
   const checkedFeatures = Array.from(
     featuresFieldset.querySelectorAll(':checked'),
-  ).map((feature) => feature.value);
+  ).map(function (feature) {
+    return feature.value;
+  });
 
   return {
     price: priceTypeToRange[price.value],

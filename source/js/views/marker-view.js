@@ -22,7 +22,7 @@ export const renderMarkerMain = function (marker) {
 };
 
 export const renderMarkers = function (data) {
-  data.forEach((ad) => {
+  data.forEach(function (ad) {
     const { lat, lng } = ad.location;
     const marker = createMarker(lat, lng);
     addToGroup(marker);
@@ -30,12 +30,10 @@ export const renderMarkers = function (data) {
 };
 
 export const createMarker = function (lat, lng) {
-  const marker = L.marker(
+  return L.marker(
     { lat: lat, lng: lng },
     {
       icon: L.icon(ICON_PIN),
     },
   );
-
-  return marker;
 };

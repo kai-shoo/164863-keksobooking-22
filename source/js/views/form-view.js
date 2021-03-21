@@ -55,14 +55,14 @@ const renderImagePreview = function (preview) {
   const file = this.files[0];
   const fileName = file.name.toLowerCase();
 
-  const isMatch = FILE_TYPES.some((it) => {
+  const isMatch = FILE_TYPES.some(function (it) {
     return fileName.endsWith(it);
   });
 
   if (isMatch) {
     const reader = new FileReader();
 
-    reader.addEventListener('load', () => {
+    reader.addEventListener('load', function () {
       const image = new Image(40, 40);
       image.src = reader.result;
 
@@ -98,25 +98,25 @@ const validateTitle = function () {
 };
 
 const addHandlerGuestsValidity = function () {
-  roomInput.addEventListener('change', () => {
+  roomInput.addEventListener('change', function () {
     toggleForbiddenOptions();
     validateGuests();
   });
 
-  capacityInput.addEventListener('change', () => {
+  capacityInput.addEventListener('change', function () {
     toggleForbiddenOptions();
     validateGuests();
   });
 };
 
 const toggleForbiddenOptions = function () {
-  capacityOptions.forEach((option) => {
+  capacityOptions.forEach(function (option) {
     if (roomInput.value === SPECIAL_ROOM_NUMBER) {
-      option.disabled = option.value !== '0' ? true : false;
+      option.disabled = option.value !== '0';
     }
 
     if (roomInput.value !== SPECIAL_ROOM_NUMBER) {
-      option.disabled = roomInput.value < option.value ? true : false;
+      option.disabled = roomInput.value < option.value;
       if (option.value === '0') {
         option.disabled = true;
       }
@@ -182,15 +182,15 @@ const validatePrice = function () {
 };
 
 const addHandlerChangeTime = function () {
-  [timeinInput, timeoutInput].forEach((input) =>
-    input.addEventListener('change', () => {
+  [timeinInput, timeoutInput].forEach(function (input) {
+    return input.addEventListener('change', function () {
       timeinInput.value = timeoutInput.value = input.value;
-    }),
-  );
+    });
+  });
 };
 
 const addHandlerChangeType = function () {
-  typeInput.addEventListener('change', () => {
+  typeInput.addEventListener('change', function () {
     const selected = typeInput.value;
     const minPrice = typeToMinPrice[selected];
     priceInput.setAttribute('min', minPrice);
@@ -201,11 +201,15 @@ const addHandlerChangeType = function () {
 
 export const toggleFormsEnability = function () {
   parentEl.classList.toggle('ad-form--disabled');
-  fieldsets.forEach((fieldset) => (fieldset.disabled = !fieldset.disabled));
+  fieldsets.forEach(function (fieldset) {
+    return (fieldset.disabled = !fieldset.disabled);
+  });
 
   filterContainer.classList.toggle('map__filters--disabled');
   features.disabled = !features.disabled;
-  filters.forEach((filter) => (filter.disabled = !filter.disabled));
+  filters.forEach(function (filter) {
+    return (filter.disabled = !filter.disabled);
+  });
 };
 
 export const setAddressValue = function (coords) {

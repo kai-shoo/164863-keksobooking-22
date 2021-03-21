@@ -23,19 +23,32 @@ const generateMarkup = function (data) {
 
   const popup = template.cloneNode(true);
 
-  popup.querySelector('.popup__avatar').src = data.author.avatar;
-  popup.querySelector('.popup__title').textContent = data.offer.title;
-  popup.querySelector('.popup__text--address').textContent = data.offer.address;
-  popup.querySelector('.popup__text--price').textContent = data.offer.price;
-  popup.querySelector('.popup__type').textContent = TYPE[data.offer.type];
+  const avatar = popup.querySelector('.popup__avatar');
+  data.author.avatar ? (avatar.src = data.author.avatar) : avatar.remove();
 
-  popup.querySelector(
-    '.popup__text--capacity',
-  ).textContent = `${data.offer.rooms} комнаты для ${data.offer.guests} гостей.`;
+  const title = popup.querySelector('.popup__title');
+  data.offer.title ? (title.textContent = data.offer.title) : title.remove();
 
-  popup.querySelector(
-    '.popup__text--time',
-  ).textContent = `Заезд после ${data.offer.checkin}, выезд до ${data.offer.checkout}`;
+  const address = popup.querySelector('.popup__text--address');
+  data.offer.address
+    ? (address.textContent = data.offer.address)
+    : address.remove();
+
+  const price = popup.querySelector('.popup__text--price');
+  data.offer.price ? (price.textContent = data.offer.price) : price.remove();
+
+  const type = popup.querySelector('.popup__type');
+  data.offer.type ? (type.textContent = TYPE[data.offer.type]) : type.remove();
+
+  const capacity = popup.querySelector('.popup__text--capacity');
+  data.offer.rooms && data.offer.guests
+    ? (capacity.textContent = `${data.offer.rooms} комнаты для ${data.offer.guests} гостей.`)
+    : capacity.remove();
+
+  const time = popup.querySelector('.popup__text--time');
+  data.offer.checkin && data.offer.checkout
+    ? (time.textContent = `Заезд после ${data.offer.checkin}, выезд до ${data.offer.checkout}`)
+    : time.remove();
 
   const featuresNodes = popup.querySelectorAll('.popup__feature');
 
@@ -44,24 +57,32 @@ const generateMarkup = function (data) {
   }
 
   if (data.offer.features.length !== 0) {
-    const featuresClasses = data.offer.features.map(
-      (feature) => `popup__feature popup__feature--${feature}`,
-    );
+    const featuresClasses = data.offer.features.map(function (feature) {
+      return `popup__feature popup__feature--${feature}`;
+    });
     keepElementsByClassFromArr(featuresClasses, featuresNodes);
   }
 
-  popup.querySelector('.popup__description').textContent =
-    data.offer.description;
+  const description = popup.querySelector('.popup__description');
+  data.offer.description
+    ? (description.textContent = data.offer.description)
+    : description.remove();
 
   const photoTemplate = popup.querySelector('.popup__photo');
   photoTemplate.remove();
 
   const photoContainer = popup.querySelector('.popup__photos');
-  data.offer.photos.forEach((photo) => {
-    const newPhoto = photoTemplate.cloneNode();
-    newPhoto.src = `${photo}`;
-    photoContainer.appendChild(newPhoto);
-  });
+  if (data.offer.photos.length !== 0) {
+    data.offer.photos.forEach(function (photo) {
+      const newPhoto = photoTemplate.cloneNode();
+      newPhoto.src = `${photo}`;
+      photoContainer.appendChild(newPhoto);
+    });
+  }
+
+  if (data.offer.photos.length === 0) {
+    photoContainer.remove();
+  }
 
   fragment.append(popup);
 

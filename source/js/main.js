@@ -24,7 +24,7 @@ const controlMarkerMainMove = function () {
 
 const controlPopupShow = function (event) {
   const clickedMarker = event.propagatedFrom;
-  const clickedAd = model.state.ads.find((ad) => {
+  const clickedAd = model.state.ads.find(function (ad) {
     if (
       ad.location.lat === clickedMarker.getLatLng().lat &&
       ad.location.lng === clickedMarker.getLatLng().lng
